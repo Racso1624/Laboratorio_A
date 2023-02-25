@@ -18,12 +18,32 @@ class AFN(object):
         character = self.characters_stack.pop()
 
         if(character == '.'):
-            pass
+            return self.concatenation()
         elif(character == '|'):
-            pass
+            return self.union()
         elif(character == '*'):
-            pass
+            return self.kleene()
         elif(character == '+'):
-            pass
+            return self.positive()
         elif(character == '?'):
-            pass
+            return self.question()
+        elif(len(self.characters_stack) == 0):
+            return self.singleState(character)
+
+    def singleState(self, transition):
+        pass
+
+    def concatenation(self):
+        pass
+
+    def union(self):
+        pass
+
+    def kleene(self):
+        pass
+
+    def positive(self):
+        pass
+
+    def question(self):
+        pass
