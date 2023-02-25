@@ -12,5 +12,28 @@ class Regex (object):
         except:
             return 5
 
-    def postfixConversion():
-        pass
+    def postfixConversion(self):
+        
+        operators_list = ['(', '|', '.', '?', '*', '+']
+        characters_queue = ''
+        postfix_expression = ''
+
+        for i in range(len(self.expression)):
+            char = self.expression[i]
+
+            if((i + 1) < len(self.expression)):
+                next_char = self.expression[i + 1]
+                characters_queue += char
+
+                if((char != '(') and (next_char != ')') and (next_char not in operators_list) and (char != '|')):
+                    characters_queue += '.'
+        
+        characters_queue += self.expression[len(self.expression) - 1]
+
+        for char in characters_queue:
+
+            if(char == '('):
+                self.operators.append(char)
+            elif(char == ')'):
+                while(self.operators[-1] != '('):
+                    postfix_expression += self.operators.pop()
