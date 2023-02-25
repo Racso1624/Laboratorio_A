@@ -37,3 +37,20 @@ class Regex (object):
             elif(char == ')'):
                 while(self.operators[-1] != '('):
                     postfix_expression += self.operators.pop()
+            else:
+                while(len(self.operators) > 0):
+                    last_char = self.operators[-1]
+                    last_char_precedence = self.operatorPrecedence(last_char)
+                    char_precedence = self.operatorPrecedence(char)
+
+                    if(last_char_precedence >= char_precedence):
+                        postfix_expression += self.operators.pop()
+                    else:
+                        break
+                
+                self.operators.append(char)
+
+        while(len(self.operators) > 0):
+            postfix_expression += self.operators.pop()
+
+        return postfix_expression
