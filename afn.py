@@ -3,4 +3,5 @@ from regex import *
 class AFN(object):
 
     def __init__(self, regex):
-        pass
+        self.regex = regex
+        self.postfix_expression = Regex(regex)
