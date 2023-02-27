@@ -299,4 +299,4 @@ class AFN(object):
         for transition in self.transitions:
             graph.edge(str(transition[0]), str(transition[2]), label=transition[1])
 
-        graph.render("PreLab_1", format="png", view=True)
+        graph.render("./images/PreLab_3", format="png", view=True)

@@ -25,7 +25,7 @@ class Regex (object):
         
         # Se crean la lista de operadores y caracteres
         # Ademas se crea la expresion
-        operators_list = ['(', '|', '.', '?', '*', '+']
+        operators_list = ['|', '?', '*', '+']
         characters_queue = ''
         postfix_expression = ''
 
@@ -67,5 +67,4 @@ class Regex (object):
 
         while(len(self.operators) > 0):
             postfix_expression += self.operators.pop()
-
         return postfix_expression

@@ -3,6 +3,6 @@
 
 from afn import *
 
-text = "ab*ab*"
+text = "(b|b)*abb(a|b)*"
 
 afn = AFN(text)

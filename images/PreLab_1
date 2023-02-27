@@ -1,0 +1,25 @@
+digraph {
+	label="AFN de la Expresión ab*ab*" labelloc=t rankdir=LR
+	1 [label=1 shape=circle style=filled]
+	2 [label=2 shape=circle]
+	3 [label=3 shape=circle]
+	4 [label=4 shape=circle]
+	5 [label=5 shape=circle]
+	6 [label=6 shape=circle]
+	7 [label=7 shape=circle]
+	8 [label=8 shape=circle]
+	9 [label=9 shape=doublecircle style=filled]
+	INICIO -> 1
+	7 -> 8 [label=b]
+	8 -> 7 [label="ε"]
+	8 -> 9 [label="ε"]
+	6 -> 7 [label="ε"]
+	6 -> 9 [label="ε"]
+	5 -> 6 [label=a]
+	3 -> 4 [label=b]
+	4 -> 3 [label="ε"]
+	4 -> 5 [label="ε"]
+	2 -> 3 [label="ε"]
+	2 -> 5 [label="ε"]
+	1 -> 2 [label=a]
+}
