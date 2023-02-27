@@ -69,7 +69,34 @@ class AFN(object):
             self.characters_stack.append(character_2)
             self.characters_stack.append(character_1)
 
-            
+            # Los estados para la operacion se obtiene de manera recursiva
+            # Se vuelve a utilizar la funcion para operar dentro de la misma
+            initial_state_1, final_state_1 = self.thompsonConstruction()
+            # Se resta un estado para concaternar 
+            self.states_counter -= 1
+            initial_state_2, final_state_2 = self.thompsonConstruction()
+
+        # Si el segundo caracter es una operacion
+        elif(character_2 in ".|*+"):
+
+            # Se regresa el caracter al stack
+            self.characters_stack.append(character_2)
+
+            # Se crea el otro estado de manera singular
+            initial_state_1, final_state_1 = self.singleState(character_1)
+            # Se resta un estado para concaternar 
+            self.states_counter -= 1
+            # Se obtienen los estados de manera recursiva
+            initial_state_2, final_state_2 = self.thompsonConstruction()
+        
+        # Si es una concatenacion normal
+        else:
+            # Se crea el otro estado de manera singular
+            initial_state_1, final_state_1 = self.singleState(character_1)
+            # Se resta un estado para concaternar 
+            self.states_counter -= 1
+            # Se crea el otro estado de manera singular
+            initial_state_2, final_state_2 = self.singleState(character_1)
 
     def union(self):
         
