@@ -119,7 +119,8 @@ class AFN(object):
         # Se crea el estado inicial de la operacion
         self.states_counter += 1
         transition_state_1 = self.states_counter
-        self.states.append(self.states_counter)
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
 
         # Si el primer caracter es otra operacion
         if(character_1 in ".|*+"):
@@ -154,7 +155,8 @@ class AFN(object):
         # Se obtiene el ultimo estado de la operacion
         self.states_counter += 1
         transition_state_2 = self.states_counter
-        self.states.append(self.states_counter)    
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)    
 
         # Se realizan las transiciones por medio de la forma de la union
         # Esto por los estados que devuelven las operaciones
@@ -178,7 +180,8 @@ class AFN(object):
         # Se crea el estado inicial de la operacion
         self.states_counter += 1
         transition_state_1 = self.states_counter
-        self.states.append(self.states_counter)
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
 
         # Si el caracter 1 es una operacion
         if(character_1 in ".|*+"):
@@ -197,7 +200,8 @@ class AFN(object):
         # Se obtiene el estado final de la operacion
         self.states_counter += 1
         transition_state_2 = self.states_counter
-        self.states.append(self.states_counter) 
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
 
         # Se realizan las transiciones correspondientes para klenee
         transition_1 = [final_state_1, "ε", initial_state_1]
@@ -219,7 +223,8 @@ class AFN(object):
         # Se crea el estado inicial de la operacion
         self.states_counter += 1
         transition_state_1 = self.states_counter
-        self.states.append(self.states_counter)
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
 
         # Si el caracter 1 es una operacion
         if(character_1 in ".|*+"):
@@ -238,7 +243,8 @@ class AFN(object):
         # Se obtiene el estado final de la operacion
         self.states_counter += 1
         transition_state_2 = self.states_counter
-        self.states.append(self.states_counter) 
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter) 
 
         # Se realizan las transiciones correspondientes para la cerradura positiva
         transition_1 = [final_state_1, "ε", initial_state_1]
@@ -288,7 +294,9 @@ class AFN(object):
             else:
                 graph.node(str(state), str(state), shape="circle")
 
+        graph.edge("INICIO", str(self.initial_state[0]))
+
         for transition in self.transitions:
             graph.edge(str(transition[0]), str(transition[2]), label=transition[1])
 
-        graph.render("AFN", format="png", view=True)
+        graph.render("PreLab_1", format="png", view=True)

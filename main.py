@@ -3,8 +3,6 @@
 
 from afn import *
 
-text = "((a|b)|b*)"
+text = "ab*ab*"
 
 afn = AFN(text)
-print(afn.postfix_expression)
-print(afn.transitions)
