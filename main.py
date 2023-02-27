@@ -3,7 +3,7 @@
 
 from afn import *
 
-text = "aab"
+text = "((a|b)|b*)"
 
 afn = AFN(text)
 print(afn.postfix_expression)

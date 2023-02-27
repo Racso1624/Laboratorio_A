@@ -8,20 +8,29 @@ class Regex (object):
     def __repr__(self) -> str:
         return self.postfix_expression
 
+    # Funcion para conocer la precedencia
     def operatorPrecedence(self, character):
+
+        # Se realiza un diccionario con precedencia
         precedence = {'(' : 1, '|' : 2, '.' : 3, '?' : 4, '*' : 4, '+' : 4}
 
+        # Se devuelve la precedencia segun el caracter ingresado
         try:
             return precedence[character]
         except:
             return 5
 
+    # Algoritmo implementando Shunting-Yard
     def postfixConversion(self):
         
+        # Se crean la lista de operadores y caracteres
+        # Ademas se crea la expresion
         operators_list = ['(', '|', '.', '?', '*', '+']
         characters_queue = ''
         postfix_expression = ''
 
+        # Se itera sobre la expresion para crear la cola de caracteres a utilizar para el algoritmo
+        # Ademas se agregan los '.' para la concatenacion que se realizara
         for i in range(len(self.expression)):
             char = self.expression[i]
 
@@ -34,6 +43,7 @@ class Regex (object):
         
         characters_queue += self.expression[len(self.expression) - 1]
 
+        # Se itera en los caracteres para obtener la precedencia
         for char in characters_queue:
 
             if(char == '('):
