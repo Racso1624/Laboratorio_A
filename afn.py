@@ -14,6 +14,8 @@ class AFN(object):
         self.final_state = []
         self.symbols = []
         self.thompsonConstruction()
+        self.orderTransitions()
+
 
     def thompsonConstruction(self):
         
@@ -43,12 +45,16 @@ class AFN(object):
 
         # Se crea un nuevo estado inicial
         self.states_counter += 1
-        self.states.append(self.states_counter)
+        # Se cuida que no se repitan estados en la lista
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
         initial_state = self.states_counter
 
         # Se crea un nuevo estado final
         self.states_counter += 1
-        self.states.append(self.states_counter)
+        # Se cuida que no se repitan estados en la lista
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
         final_state = self.states_counter
 
         # Se realiza la transicion de los estados con el simbolo que se ingreso
@@ -232,7 +238,7 @@ class AFN(object):
         transition_state_2 = self.states_counter
         self.states.append(self.states_counter) 
 
-        # Se realizan las transiciones correspondientes para klenee
+        # Se realizan las transiciones correspondientes para la cerradura positiva
         transition_1 = [final_state_1, "ε", initial_state_1]
         transition_2 = [transition_state_1, "ε", initial_state_1]
         transition_3 = [final_state_1, "ε", transition_state_2]
@@ -248,4 +254,13 @@ class AFN(object):
         pass
 
     def orderTransitions(self):
-        pass
+        
+        self.initial_state.append(self.states[0])
+        self.final_state.append(self.states_counter)
+
+        for transition in self.transitions:
+            transition_1 = transition[0]
+            transition_2 = transition[2]
+            
+            transition[0] = self.states[len(self.states) - transition_2]
+            transition[2] = self.states[len(self.states) - transition_1]
