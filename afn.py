@@ -57,7 +57,19 @@ class AFN(object):
 
 
     def concatenation(self):
-        pass
+        
+        # Se obtienen los dos caracteres para realizar la operacion
+        character_1 = self.characters_stack.pop()
+        character_2 = self.characters_stack.pop()
+
+        # Si el primer caracter es otra operacion
+        if(character_1 in ".|*+"):
+            
+            # Se devuelven los caracteres al stack
+            self.characters_stack.append(character_2)
+            self.characters_stack.append(character_1)
+
+            
 
     def union(self):
         
