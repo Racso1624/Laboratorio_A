@@ -50,7 +50,40 @@ class AFN(object):
         pass
 
     def union(self):
-        pass
+        
+        character_1 = self.characters_stack.pop()
+        character_2 = self.characters_stack.pop()
+
+        if(character_1 in ".|*+"):
+
+            self.states_counter += 1
+            transition_state_1 = self.states_counter
+            self.states.append(self.states_counter)
+
+            self.characters_stack.append(character_2)
+            self.characters_stack.append(character_1)
+
+            if(len(self.characters_stack) != 1):
+                initial_state_1, final_state_1 = self.thompsonConstruction()
+            else:
+                new_character = self.characters_stack.pop()
+                initial_state_1, final_state_1 = self.singleState(new_character)
+
+            initial_state_2, final_state_2 = self.thompsonConstruction()
+
+            self.states_counter += 1
+            transition_state_2 = self.states_counter
+            self.states.append(self.states_counter)
+
+            transition_1 = [transition_state_1, "ε", initial_state_1]
+            transition_2 = [transition_state_1, "ε", initial_state_2]
+            transition_3 = [final_state_1, "ε", transition_state_2]
+            transition_4 = [final_state_2, "ε", transition_state_2]
+
+            self.transitions.extend((transition_1, transition_2, transition_3, transition_4))
+        
+        elif(character_2 in ".|*+"):
+            pass
 
     def kleene(self):
         pass
