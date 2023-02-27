@@ -26,12 +26,25 @@ class AFN(object):
         elif(character == '+'):
             return self.positive()
         elif(character == '?'):
-            return self.question()
+            return self.nullable()
         elif(len(self.characters_stack) == 0):
             return self.singleState(character)
 
-    def singleState(self, transition):
-        pass
+    def singleState(self, symbol):
+        
+        if(symbol not in self.symbols):
+            self.symbols.append(symbol)
+
+        self.states_counter += 1
+        self.states.append(self.states_counter)
+        initial_state = self.states_counter
+
+        self.states_counter += 1
+        self.states.append(self.states_counter)
+        final_state = self.states_counter
+
+        return initial_state, final_state
+
 
     def concatenation(self):
         pass
@@ -45,5 +58,5 @@ class AFN(object):
     def positive(self):
         pass
 
-    def question(self):
+    def nullable(self):
         pass
