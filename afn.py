@@ -252,15 +252,21 @@ class AFN(object):
 
     def nullable(self):
         pass
+    
 
+    # Funcion realizada para ordenar las transiciones de manera que se puedan visualizar
+    # con un orden de 1 a N estados
     def orderTransitions(self):
         
+        # Se guardan los estados inicial y final
         self.initial_state.append(self.states[0])
         self.final_state.append(self.states_counter)
 
+        # Se itera en las transiciones existentes
         for transition in self.transitions:
             transition_1 = transition[0]
             transition_2 = transition[2]
             
+            # Se cambia el orden para cada transicion con respecto a los numeros de estados
             transition[0] = self.states[len(self.states) - transition_2]
             transition[2] = self.states[len(self.states) - transition_1]
