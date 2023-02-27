@@ -55,8 +55,6 @@ class Regex (object):
                 
                 self.operators.append(char)
 
-            print(postfix_expression)
-
         while(len(self.operators) > 0):
             postfix_expression += self.operators.pop()
 

@@ -3,6 +3,6 @@
 
 from regex import *
 
-text = "(a|b)*"
+text = "(a*|b)*"
 
 print(Regex(text))

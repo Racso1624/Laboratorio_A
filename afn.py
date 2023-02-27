@@ -54,11 +54,11 @@ class AFN(object):
         character_1 = self.characters_stack.pop()
         character_2 = self.characters_stack.pop()
 
-        if(character_1 in ".|*+"):
+        self.states_counter += 1
+        transition_state_1 = self.states_counter
+        self.states.append(self.states_counter)
 
-            self.states_counter += 1
-            transition_state_1 = self.states_counter
-            self.states.append(self.states_counter)
+        if(character_1 in ".|*+"):
 
             self.characters_stack.append(character_2)
             self.characters_stack.append(character_1)
@@ -70,20 +70,30 @@ class AFN(object):
                 initial_state_1, final_state_1 = self.singleState(new_character)
 
             initial_state_2, final_state_2 = self.thompsonConstruction()
-
-            self.states_counter += 1
-            transition_state_2 = self.states_counter
-            self.states.append(self.states_counter)
-
-            transition_1 = [transition_state_1, "ε", initial_state_1]
-            transition_2 = [transition_state_1, "ε", initial_state_2]
-            transition_3 = [final_state_1, "ε", transition_state_2]
-            transition_4 = [final_state_2, "ε", transition_state_2]
-
-            self.transitions.extend((transition_1, transition_2, transition_3, transition_4))
         
         elif(character_2 in ".|*+"):
-            pass
+
+            self.characters_stack.append(character_2)
+
+            initial_state_1, final_state_1 = self.thompsonConstruction()
+            initial_state_2, final_state_2 = self.singleState(character_1)
+
+        else:
+
+            initial_state_1, final_state_1 = self.singleState(character_2)
+            initial_state_2, final_state_2 = self.singleState(character_1)
+
+        self.states_counter += 1
+        transition_state_2 = self.states_counter
+        self.states.append(self.states_counter)    
+
+        transition_1 = [transition_state_1, "ε", initial_state_1]
+        transition_2 = [transition_state_1, "ε", initial_state_2]
+        transition_3 = [final_state_1, "ε", transition_state_2]
+        transition_4 = [final_state_2, "ε", transition_state_2]
+
+        self.transitions.extend((transition_1, transition_2, transition_3, transition_4))
+
 
     def kleene(self):
         pass
