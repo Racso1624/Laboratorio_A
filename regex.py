@@ -41,6 +41,7 @@ class Regex (object):
             elif(char == ')'):
                 while(self.operators[-1] != '('):
                     postfix_expression += self.operators.pop()
+                self.operators.pop()
             else:
                 while(len(self.operators) > 0):
                     last_char = self.operators[-1]
@@ -53,6 +54,8 @@ class Regex (object):
                         break
                 
                 self.operators.append(char)
+
+            print(postfix_expression)
 
         while(len(self.operators) > 0):
             postfix_expression += self.operators.pop()
