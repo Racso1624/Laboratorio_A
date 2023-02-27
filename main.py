@@ -8,5 +8,3 @@ text = "((a|b)|b*)"
 afn = AFN(text)
 print(afn.postfix_expression)
 print(afn.transitions)
-print(afn.states_counter)
-print(afn.states)

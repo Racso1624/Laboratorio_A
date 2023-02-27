@@ -275,7 +275,7 @@ class AFN(object):
 
     def graphAF(self):
         
-        description = ("AFN de la expresion " + self.postfix_expression)
+        description = ("AFN de la Expresión " + self.regex)
         graph = Digraph()
         graph.attr(rankdir="LR", labelloc="t", label=description)
 
