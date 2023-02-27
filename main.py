@@ -3,6 +3,6 @@
 
 from afn import *
 
-text = "0?(1?)?0*"
+text = "a*"
 
 afn = AFN(text)

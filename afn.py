@@ -174,7 +174,7 @@ class AFN(object):
 
     def kleene(self):
         
-        # Se obtiene un caracter para klenee
+        # Se obtiene un caracter para kleene
         character_1 = self.characters_stack.pop()
 
         # Se crea el estado inicial de la operacion
@@ -203,7 +203,7 @@ class AFN(object):
         if(self.states_counter not in self.states):
             self.states.append(self.states_counter)
 
-        # Se realizan las transiciones correspondientes para klenee
+        # Se realizan las transiciones correspondientes para kleene
         transition_1 = [final_state_1, "ε", initial_state_1]
         transition_2 = [transition_state_1, "ε", initial_state_1]
         transition_3 = [final_state_1, "ε", transition_state_2]
@@ -216,6 +216,8 @@ class AFN(object):
         return transition_state_1, transition_state_2
 
     def positive(self):
+        
+        expression_copy = self.postfix_expression
 
         # Se obtiene un caracter para la cerradura positiva
         character_1 = self.characters_stack.pop()
@@ -240,22 +242,17 @@ class AFN(object):
             # Se realiza el estado singular
             initial_state_1, final_state_1 = self.singleState(character_1)
 
-        # Se obtiene el estado final de la operacion
-        self.states_counter += 1
-        transition_state_2 = self.states_counter
-        if(self.states_counter not in self.states):
-            self.states.append(self.states_counter) 
+        expression_copy = list(expression_copy)
+        expression_copy[len(expression_copy) - 1] = "*"
+        "".join(expression_copy)
+        print(expression_copy)
+        self.postfix_expression = expression_copy
+        self.states_counter -= 1
 
-        # Se realizan las transiciones correspondientes para la cerradura positiva
-        transition_1 = [final_state_1, "ε", initial_state_1]
-        transition_2 = [transition_state_1, "ε", initial_state_1]
-        transition_3 = [final_state_1, "ε", transition_state_2]
-
-        # Se guardan las transiciones en la lista
-        self.transitions.extend((transition_1, transition_2, transition_3))
+        inicial_state_2, final_state_2 = self.thompsonConstruction()
         
         # Se regresa el primer y ultimo estado, esto para la recursividad
-        return transition_state_1, transition_state_2
+        return transition_state_1, final_state_2
 
 
     def nullable(self):
@@ -301,6 +298,7 @@ class AFN(object):
         # Se guardan las transiciones en la lista
         self.transitions.extend((transition_1, transition_2, transition_3, transition_4))
 
+        # Se regresa el primer y ultimo estado, esto para la recursividad
         return transition_state_1, transition_state_2
     
 
@@ -341,4 +339,4 @@ class AFN(object):
         for transition in self.transitions:
             graph.edge(str(transition[0]), str(transition[2]), label=transition[1])
 
-        graph.render("./images/PreLab_2", format="png", view=True)
+        graph.render("./images/PreLab_5", format="png", view=True)

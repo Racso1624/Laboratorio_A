@@ -3,10 +3,18 @@ class Regex (object):
     def __init__(self, regex):
         self.expression = regex
         self.operators = []
+        self.errorValidation()
         self.postfix_expression = self.postfixConversion() 
 
     def __repr__(self) -> str:
         return self.postfix_expression
+    
+    def errorValidation(self):
+        expression = self.expression
+        if(expression.count('(') != expression.count(')')):
+            raise Exception("ERROR: Cantidad de Parentesis Incorrecta")
+        if(expression[0] in ".|*+?"):
+            raise Exception("ERROR: No se puede iniciar con simbolo de operacion")
 
     # Funcion para conocer la precedencia
     def operatorPrecedence(self, character):
