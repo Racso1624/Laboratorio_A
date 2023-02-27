@@ -73,7 +73,7 @@ class AFN(object):
         character_2 = self.characters_stack.pop()
 
         # Si el primer caracter es otra operacion
-        if(character_1 in ".|*+"):
+        if(character_1 in ".|*+?"):
             
             # Se devuelven los caracteres al stack
             self.characters_stack.append(character_2)
@@ -87,7 +87,7 @@ class AFN(object):
             initial_state_2, final_state_2 = self.thompsonConstruction()
 
         # Si el segundo caracter es una operacion
-        elif(character_2 in ".|*+"):
+        elif(character_2 in ".|*+?"):
 
             # Se regresa el caracter al stack
             self.characters_stack.append(character_2)
@@ -123,7 +123,7 @@ class AFN(object):
             self.states.append(self.states_counter)
 
         # Si el primer caracter es otra operacion
-        if(character_1 in ".|*+"):
+        if(character_1 in ".|*+?"):
             
             # Se devuelven los caracteres al stack
             self.characters_stack.append(character_2)
@@ -135,7 +135,7 @@ class AFN(object):
             initial_state_2, final_state_2 = self.thompsonConstruction()
         
         # Si el segundo caracter es una operacion
-        elif(character_2 in ".|*+"):
+        elif(character_2 in ".|*+?"):
 
             # Se regresa el caracter al stack
             self.characters_stack.append(character_2)
@@ -184,7 +184,7 @@ class AFN(object):
             self.states.append(self.states_counter)
 
         # Si el caracter 1 es una operacion
-        if(character_1 in ".|*+"):
+        if(character_1 in ".|*+?"):
 
             # Se regresa al stack el operador
             self.characters_stack.append(character_1)
@@ -227,7 +227,7 @@ class AFN(object):
             self.states.append(self.states_counter)
 
         # Si el caracter 1 es una operacion
-        if(character_1 in ".|*+"):
+        if(character_1 in ".|*+?"):
 
             # Se regresa al stack el operador
             self.characters_stack.append(character_1)
@@ -259,7 +259,49 @@ class AFN(object):
 
 
     def nullable(self):
-        pass
+
+        # Se obtiene un caracter para nullable
+        character_1 = self.characters_stack.pop()
+
+        # Se crea el estado inicial de la operacion
+        self.states_counter += 1
+        transition_state_1 = self.states_counter
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
+
+        # Si el caracter 1 es una operacion
+        if(character_1 in ".|*+?"):
+
+            # Se regresa al stack el operador
+            self.characters_stack.append(character_1)
+            # Se obtienen de manera recursiva los estados
+            initial_state_1, final_state_1 = self.thompsonConstruction()
+
+        # Si el caracter no es una operacion
+        else: 
+            
+            # Se realiza el estado singular
+            initial_state_1, final_state_1 = self.singleState(character_1)
+        
+        initial_state_2, final_state_2 = self.singleState("ε")
+
+        # Se obtiene el estado final de la operacion
+        self.states_counter += 1
+        transition_state_2 = self.states_counter
+        if(self.states_counter not in self.states):
+            self.states.append(self.states_counter)
+
+        # Se realizan las transiciones por medio de la forma de la nullable
+        # Esto por los estados que devuelven las operaciones
+        transition_1 = [transition_state_1, "ε", initial_state_1]
+        transition_2 = [transition_state_1, "ε", initial_state_2]
+        transition_3 = [final_state_1, "ε", transition_state_2]
+        transition_4 = [final_state_2, "ε", transition_state_2]
+
+        # Se guardan las transiciones en la lista
+        self.transitions.extend((transition_1, transition_2, transition_3, transition_4))
+
+        return transition_state_1, transition_state_2
     
 
     # Funcion realizada para ordenar las transiciones de manera que se puedan visualizar
@@ -299,4 +341,4 @@ class AFN(object):
         for transition in self.transitions:
             graph.edge(str(transition[0]), str(transition[2]), label=transition[1])
 
-        graph.render("./images/PreLab_4", format="png", view=True)
+        graph.render("./images/PreLab_2", format="png", view=True)
