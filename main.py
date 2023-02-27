@@ -1,8 +1,11 @@
 # Oscar Fernando López Barrios
 # Carné 20679
 
-from regex import *
+from afn import *
 
-text = "a*|b*"
+text = "aab"
 
-print(Regex(text))
+afn = AFN(text)
+print(afn.postfix_expression)
+print(afn.transitions)
+print(afn.states_counter)

@@ -4,7 +4,8 @@ class AFN(object):
 
     def __init__(self, regex):
         self.regex = regex
-        self.postfix_expression = Regex(regex)
+        self.postfix_expression = Regex(regex).postfix_expression
+        print(self.postfix_expression)
         self.characters_stack = list(self.postfix_expression)
         self.states_counter = 0
         self.states = []
@@ -12,6 +13,7 @@ class AFN(object):
         self.initial_state = []
         self.final_state = []
         self.symbols = []
+        self.thompsonConstruction()
 
     def thompsonConstruction(self):
         
@@ -97,6 +99,8 @@ class AFN(object):
             self.states_counter -= 1
             # Se crea el otro estado de manera singular
             initial_state_2, final_state_2 = self.singleState(character_1)
+
+        return initial_state_1, final_state_2
 
     def union(self):
         
