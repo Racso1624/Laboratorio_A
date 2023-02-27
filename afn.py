@@ -1,4 +1,5 @@
 from regex import *
+from graphviz import Digraph
 
 class AFN(object):
 
@@ -15,6 +16,7 @@ class AFN(object):
         self.symbols = []
         self.thompsonConstruction()
         self.orderTransitions()
+        self.graphAF()
 
 
     def thompsonConstruction(self):
@@ -270,3 +272,23 @@ class AFN(object):
             # Se cambia el orden para cada transicion con respecto a los numeros de estados
             transition[0] = self.states[len(self.states) - transition_2]
             transition[2] = self.states[len(self.states) - transition_1]
+
+    def graphAF(self):
+        
+        description = ("AFN de la expresion " + self.postfix_expression)
+        graph = Digraph()
+        graph.attr(rankdir="LR", labelloc="t", label=description)
+
+        for state in self.states:
+
+            if(state in self.initial_state):
+                graph.node(str(state), str(state), shape="circle", style="filled")
+            elif(state in self.final_state):
+                graph.node(str(state), str(state), shape="doublecircle", style="filled")
+            else:
+                graph.node(str(state), str(state), shape="circle")
+
+        for transition in self.transitions:
+            graph.edge(str(transition[0]), str(transition[2]), label=transition[1])
+
+        graph.render("AFN", format="png", view=True)
