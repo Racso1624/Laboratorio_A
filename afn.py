@@ -204,7 +204,48 @@ class AFN(object):
         return transition_state_1, transition_state_2
 
     def positive(self):
-        pass
+
+        # Se obtiene un caracter para la cerradura positiva
+        character_1 = self.characters_stack.pop()
+
+        # Se crea el estado inicial de la operacion
+        self.states_counter += 1
+        transition_state_1 = self.states_counter
+        self.states.append(self.states_counter)
+
+        # Si el caracter 1 es una operacion
+        if(character_1 in ".|*+"):
+
+            # Se regresa al stack el operador
+            self.characters_stack.append(character_1)
+            # Se obtienen de manera recursiva los estados
+            initial_state_1, final_state_1 = self.thompsonConstruction()
+
+        # Se el caracter no es una operacion
+        else: 
+            
+            # Se realiza el estado singular
+            initial_state_1, final_state_1 = self.singleState(character_1)
+
+        # Se obtiene el estado final de la operacion
+        self.states_counter += 1
+        transition_state_2 = self.states_counter
+        self.states.append(self.states_counter) 
+
+        # Se realizan las transiciones correspondientes para klenee
+        transition_1 = [final_state_1, "ε", initial_state_1]
+        transition_2 = [transition_state_1, "ε", initial_state_1]
+        transition_3 = [final_state_1, "ε", transition_state_2]
+
+        # Se guardan las transiciones en la lista
+        self.transitions.extend((transition_1, transition_2, transition_3))
+        
+        # Se regresa el primer y ultimo estado, esto para la recursividad
+        return transition_state_1, transition_state_2
+
 
     def nullable(self):
+        pass
+
+    def orderTransitions(self):
         pass
